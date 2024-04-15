@@ -147,6 +147,6 @@ async def read_item():
 
     return json_data
 
-@app.get()
+@app.get("/")
 async def greet():
     return {"Hello! Developer"}
