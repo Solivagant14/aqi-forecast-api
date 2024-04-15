@@ -10,8 +10,5 @@ COPY . /app
 # Install Python dependencies from requirements.txt
 RUN pip3 install -r requirements.txt
 
-# Expose port 8000
-EXPOSE 8000
-
 # Set the default command to run when the container starts
 CMD uvicorn app:app --host 0.0.0.0 --port $PORT

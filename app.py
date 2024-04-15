@@ -144,5 +144,9 @@ async def read_item():
     # Load JSON input data from file
     with open('sorted_days.json', 'r') as file:
         json_data = json.load(file)
-        
+
     return json_data
+
+@app.get()
+async def greet():
+    return {"Hello! Developer"}
