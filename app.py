@@ -89,14 +89,12 @@ model_pm10_path = 'model/pm10_model.pkl'
 trained_model_pm25 = load_model(model_pm25_path)
 trained_model_pm10 = load_model(model_pm10_path)
 
-# Load JSON input data from file
-with open('sorted_days.json', 'r') as file:
-    json_data = json.load(file)
+
 
 @app.get("/extract/")
 def get_weather(date: str = None):
     if date is None:
-        current_date_str = (datetime.now()+timedelta(days=1)).strftime('%Y-%m-%d')
+        current_date_str = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
     else:
         current_date_str = date
     five_days_earlier_str = (datetime.strptime(current_date_str, '%Y-%m-%d') - timedelta(days=5)).strftime('%Y-%m-%d')
@@ -125,6 +123,10 @@ def get_weather(date: str = None):
 async def predict_pm_values(pm_type: str):
     if pm_type not in ['pm2p5', 'pm10']:
         raise HTTPException(status_code=400, detail="Invalid pollutant type. Use 'pm2p5' or 'pm10'.")
+    
+    # Load JSON input data from file
+    with open('sorted_days.json', 'r') as file:
+        json_data = json.load(file)
 
     # Preprocess JSON data for the specified pollutant
     input_data = preprocess_input_data(json_data, pm_type)
@@ -136,3 +138,11 @@ async def predict_pm_values(pm_type: str):
         predicted_value = predict_values(trained_model_pm10, input_data)
 
     return {"pollutant": pm_type, "predicted_value": round(predicted_value,2)}
+
+@app.get("/items/")
+async def read_item():
+    # Load JSON input data from file
+    with open('sorted_days.json', 'r') as file:
+        json_data = json.load(file)
+        
+    return json_data
