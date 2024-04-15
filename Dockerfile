@@ -14,4 +14,4 @@ RUN pip3 install -r requirements.txt
 EXPOSE 8000
 
 # Set the default command to run when the container starts
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD uvicorn api:app --host 0.0.0.0 --port $PORT
