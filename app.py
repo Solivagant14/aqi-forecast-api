@@ -1,8 +1,8 @@
-import pandas as pd
 import numpy as np
 import pickle
 import json
 import requests
+import uvicorn
 from datetime import datetime, timedelta
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
